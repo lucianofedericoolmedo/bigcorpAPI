@@ -10,22 +10,6 @@ from rest_api.serializers.employee import EmployeeSerializer
 from rest_api.serializers.office import OfficeSerializer
 
 
-@api_view(['GET', 'OPTIONS'])
-def get_data(request):
-    url = 'https://rfy56yfcwk.execute-api.us-west-1.amazonaws.com/bigcorp/employees'
-    response = requests.get(url)
-    data = response.json()
-    for item in data:
-        elem, _ = Employee.objects.get_or_create(id=item['id'])
-        elem.first = item['first']
-        elem.last = item['last']
-        elem.manager = Employee.objects.get(id=item['manager']) if item['manager'] is not None else None
-        elem.department = Department.objects.get(id=item['department']) if item['department'] is not None else None
-        elem.office = Office.objects.get(id=item['office']) if item['office'] is not None else None
-        elem.save()
-    return Response(status=status.HTTP_200_OK)
-
-
 class FilterInPlaceWithModelFields(object):
     def filter_by_fields_queryset_in_place(self, queryset):
         to_filter = {}
