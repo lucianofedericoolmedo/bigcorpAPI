@@ -22,17 +22,6 @@ def forwards_func(apps, schema_editor):
     else:
       print('Superuser already created')
 
-    if not User.objects.filter(username='refugioUser').exists() :
-      refugioUser = User.objects.create_user('refugioUser',
-                                             is_staff=True,
-                                             is_superuser=False,
-                                             password='refugiouser123',
-                                             email='refugioUser@user.com')
-      #REFUGIO = 'REF'
-      #ProfileService.create_profile('refugioUser','', refugioUser, REFUGIO)
-    else:
-      print('Refugio user already created')
-
 
 def reverse_func(apps, schema_editor):
     # destroy what forward_func builds
